@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # --- CONFIGURATION ---
-BUTTON_DEVICE="/dev/input/event4"  # Your verified event file
+BUTTON_DEVICE=$(awk '/Phys=adc-keys\/input0/{flag=1} flag && /Handlers=/{for(i=1;i<=NF;i++) if($i ~ /^event[0-9]+$/) {print "/dev/input/"$i; exit}}' /proc/bus/input/devices)
 BUTTON_CODE="115"                  # KEY_VOLUMEUP
 LED_TRIGGER_PATH="/sys/class/leds/status-led/trigger"
 LED_BRIGHTNESS_PATH="/sys/class/leds/status-led/brightness"
